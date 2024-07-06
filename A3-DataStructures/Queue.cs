@@ -102,9 +102,9 @@ public class Queue<T> : IEnumerable<T>
 
     public IEnumerator<T> GetEnumerator()  //`GetEnumerator` is a method that returns an enumerator for the queue.
     {
-        for (int i = start; i < end; i++) //`GetEnumerator` is a method that returns an enumerator for the queue.
+        for (int i = start; i < start + Count; i++) //`GetEnumerator` is a method that returns an enumerator for the queue.
         {
-            yield return buffer[i % Capacity]!; //`GetEnumerator` returns the elements in the queue using a loop.
+            yield return buffer[i % buffer.Length]!; //`GetEnumerator` returns the elements in the queue using a loop.
         }
     }
 

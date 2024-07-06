@@ -249,14 +249,15 @@ public class LinkedList<T> : IEnumerable<T>
         if (IsEmpty)
         {
             Head = otherList.Head;
-            Tail = otherList.Tail;
+            Tail = otherList.Tail; // Tail is now the tail of the other list
         }
         else
         {
             Tail.Next = otherList.Head;
             otherList.Head.Prev = Tail;
-            Tail = otherList.Tail;
+            Tail = otherList.Tail; // Tail is now the tail of the other list
         }
+        otherList.Head = otherList.Tail = null; // Clear the other list
     }
 
     public Node<T>? Find(T item)

@@ -8,7 +8,7 @@ static class Program
     /// <summary>
     /// The random number generator used for all RNG in the program.
     /// </summary>
-    public static Random RNG = new(/* Seed here */);
+    public static Random RNG = new(32);
 
 
     private static void Main()

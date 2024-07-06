@@ -59,3 +59,4 @@
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/A3-Program.pdb
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/A3-Program.genruntimeconfig.cache
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/ref/A3-Program.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/A3-Program.sourcelink.json

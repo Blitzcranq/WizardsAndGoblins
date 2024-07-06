@@ -20,3 +20,4 @@
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/refint/A3-DataStructures.dll
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.pdb
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/ref/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.sourcelink.json

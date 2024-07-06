@@ -17,17 +17,7 @@ public class CastleDefender : Visualization
     public Node<Wizard>? ActiveWizard { get; private set; }
     public Vector2 goblinDirection { get; private set; } = new Vector2(0, 0);
     private uint nextSpellTime = 0;
-    protected void updateTimer()
-    {
-        if (nextSpellTime == 0)
-        {
-            nextSpellTime = randomSpellTime();
-        }
-        else
-        {
-            nextSpellTime--;
-        }
-    }
+
     protected Vector2 randomGoblinDirection()
     {
         Vector2 direction = new Vector2(RNG.NextSingle() * 2 - 1, RNG.NextSingle() * 2 - 1);
@@ -57,30 +47,20 @@ public class CastleDefender : Visualization
         nextSpellTime = randomSpellTime();
 
     }
+
     protected override void Update(uint currentFrame)
     {
         updateTimer();
         updateSpells();
         moveGoblins();
-
         updateWizards();
-        // checkForRecoveryForAllWizards();
         recoverWizards();
-        // checkForBackup();
-        if (GoblinSquad.Count <= 4)
-        {
-            GoblinSquad.AppendAll(BackupGoblins);
-        }
-
-
+        checkForBackup();
 
     }
-    protected void moveHeadGoblin(Node<Goblin> headGoblin)
+    protected void updateTimer()
     {
-        headGoblin.Item.Move(goblinDirection, Goblin.Speed);
-        Vector2 localGoblinDirection = goblinDirection;
-        CastleGameRenderer.CheckWallCollision(headGoblin.Item, ref localGoblinDirection);
-        goblinDirection = localGoblinDirection;
+        nextSpellTime = (nextSpellTime == 0) ? randomSpellTime() : nextSpellTime - 1;
     }
     protected void updateSpells()
     {
@@ -96,55 +76,58 @@ public class CastleDefender : Visualization
         }
 
     }
+    protected void moveHeadGoblin(Node<Goblin> headGoblin)
+    {
+        headGoblin.Item.Move(goblinDirection, Goblin.Speed);
+        Vector2 localGoblinDirection = goblinDirection;
+        CastleGameRenderer.CheckWallCollision(headGoblin.Item, ref localGoblinDirection);
+        goblinDirection = localGoblinDirection;
+    }
     protected void moveGoblins()
     {
-        Node<Goblin>? headGoblin = GoblinSquad.Head!;
-        Node<Goblin>? tailGoblin = GoblinSquad.Tail!;
-        Node<Goblin>? currentGoblin = tailGoblin;
-
-        Node<Spell>? currentSpell = Spells.Head!;
-
-        if (headGoblin != null)
-        {
-            while (currentGoblin != headGoblin)
-            {
-                currentGoblin.Item.MoveTowards(currentGoblin.Prev!.Item, Goblin.Speed);
-
-                currentSpell = Spells.Head!;
-                while (currentSpell != null)
-                {
-                    if (currentSpell.Item.Colliding(currentGoblin.Item))
-                    {
-                        GoblinSquad.Remove(currentGoblin.Item);
-                        Spells.Remove(currentSpell.Item);
-                        goblinDirection = randomGoblinDirection();
-                    }
-                    currentSpell = currentSpell.Next;
-                }
-                currentGoblin = currentGoblin.Prev;
-            }
-            while (currentSpell != null)
-            {
-                if (currentSpell.Item.Colliding(headGoblin.Item))
-                {
-                    GoblinSquad.Remove(headGoblin.Item);
-                    Spells.Remove(currentSpell.Item);
-                    goblinDirection = randomGoblinDirection();
-                }
-                currentSpell = currentSpell.Next;
-            }
-            moveHeadGoblin(headGoblin);
-        }
-        else
-
+        Node<Goblin>? headGoblin = GoblinSquad.Head;
+        if (headGoblin == null)
         {
             Pause();
             Console.WriteLine("Wizard wins!");
-
+            return;
+        }
+        // Move all other goblins and check for spell collisions
+        Node<Goblin>? currentGoblin = GoblinSquad.Tail;
+        while (currentGoblin != null && currentGoblin != headGoblin)
+        {
+            if (currentGoblin.Prev != null)
+            {
+                currentGoblin.Item.MoveTowards(currentGoblin.Prev.Item, Goblin.Speed);
+                CheckSpellCollisions(currentGoblin);
+            }
+            currentGoblin = currentGoblin.Prev;
         }
 
+        // move head goblin now
+        if (headGoblin != null)
+        {
+            moveHeadGoblin(headGoblin);
+            CheckSpellCollisions(headGoblin);
+        }
     }
 
+    protected void CheckSpellCollisions(Node<Goblin> goblinNode)
+    {
+        Node<Spell>? currentSpell = Spells.Head;
+        while (currentSpell != null)
+        {
+            if (currentSpell.Item.Colliding(goblinNode.Item))
+            {
+                // Console.WriteLine($"Goblin hit at position {goblinNode.Item.Position}, removing goblin and spell.");
+                GoblinSquad.Remove(goblinNode.Item);
+                Spells.Remove(currentSpell.Item);
+                goblinDirection = randomGoblinDirection();
+                return; // Exit the method as the goblin is removed
+            }
+            currentSpell = currentSpell.Next;
+        }
+    }
 
     protected void updateWizards()
     {
@@ -154,8 +137,16 @@ public class CastleDefender : Visualization
             {
                 Spell wizardSpell = new Spell(ActiveWizard.Item.SpellType, ActiveWizard.Item.Position);
                 Spells.AddBack(wizardSpell);
-                ActiveWizard.Item.Energy -= ActiveWizard.Item.SpellLevel;
-                if (ActiveWizard.Item.Energy <= 0)
+                if (ActiveWizard.Item.Energy < ActiveWizard.Item.SpellLevel)
+                {
+                    ActiveWizard.Item.Energy = 0;
+                }
+                else
+                {
+                    ActiveWizard.Item.Energy -= ActiveWizard.Item.SpellLevel;
+                }
+
+                if (ActiveWizard.Item.Energy == 0)
                 {
                     WizardSquad.Remove(ActiveWizard);
                     RecoveryQueue.Enqueue(ActiveWizard.Item);
@@ -212,13 +203,13 @@ public class CastleDefender : Visualization
             }
 
         }
-        // }
-        // protected void checkForBackup()
-        // {
-        //     if (GoblinSquad.Items < 4)
-        //     {
-        //         GoblinSquad.AppendAll(BackupGoblins);
-        //     }
-        // }
+    }
+
+    protected void checkForBackup()
+    {
+        if (GoblinSquad.Count <= 4)
+        {
+            GoblinSquad.AppendAll(BackupGoblins);
+        }
     }
 }
