@@ -6,105 +6,105 @@ using System.Collections.Generic;
 
 public class Queue<T> : IEnumerable<T>
 {
-    public const int DefaultCapacity = 8; //`DefaultCapacity` is a constant that represents the default capacity of the queue.
+    public const int DefaultCapacity = 8;
 
-    private T?[] buffer; //`buffer` is an array of type `T` that represents the queue.
-    private int start; //`start` is an integer that represents the index of the first element in the queue.
-    private int end; //`end` is an integer that represents the index of the last element in the queue.
+    private T?[] buffer;
+    private int start;
+    private int end;
 
-    public bool IsEmpty //`IsEmpty` is a boolean property that returns true if the queue is empty and false otherwise.
+    public bool IsEmpty
     {
         get
         {
-            return start == end;
+            return Count == 0;
         }
     }
-    public int Count //`Count` is an integer property that returns the number of elements in the queue.
+    public int Count
     {
         get
         {
-            return end < start ? (buffer.Length - start + end) : (end - start); //`Count` returns the number of elements in the queue by calculating the difference between the `end` and `start` indices.
+            return end < start ? (Capacity - start + end) : (end - start);
         }
     }
-    public int Capacity //`Capacity` is an integer property that returns the capacity of the queue.
+    public int Capacity
     {
         get
         {
-            return buffer.Length - 1; //`Capacity` returns the capacity of the queue by subtracting 1 from the length of the `buffer` array.
+            return buffer.Length;
         }
 
     }
-    public Queue() : this(DefaultCapacity)  //`Queue` is a constructor that initializes the queue with the default capacity.
+    public Queue() : this(DefaultCapacity)
     { }
 
-    private void Grow() //`Grow` is a private method that increases the capacity of the queue by creating a new buffer with double the capacity and copying the elements from the old buffer to the new buffer.
+    private void Grow()
     {
-        T[] tmpBuffer = new T[(Capacity + 1) * 2]; //`Grow` creates a new buffer with double the capacity of the old buffer.
-        Array.Copy(buffer, start, tmpBuffer, 0, buffer.Length - start); //`Grow` copies the elements from the old buffer to the new buffer.
-        Array.Copy(buffer, 0, tmpBuffer, buffer.Length - start, end + 1); //`Grow` copies the elements from the old buffer to the new buffer.
-        int oldLength = Count; //`Grow` stores the old length of the queue.
-        buffer = tmpBuffer; //`Grow` assigns the new buffer to the old buffer.
-        end = oldLength; //`Grow` updates the end index of the queue.
-        start = 0; //`Grow` updates the start index of the queue.
+        T[] tmpBuffer = new T[Capacity * 2];
+        Array.Copy(buffer, start, tmpBuffer, 0, Capacity - start);
+        Array.Copy(buffer, 0, tmpBuffer, Capacity - start, end + 1);
+        int oldLength = Count;
+        buffer = tmpBuffer;
+        end = oldLength;
+        start = 0;
 
     }
-    public Queue(int capacity) //one parameter constructor
+    public Queue(int capacity)
     {
         buffer = new T?[capacity];
         start = 0;
         end = 0;
     }
 
-    public void Enqueue(T item) //`Enqueue` is a method that adds an element to the end of the queue.
+    public void Enqueue(T item)
     {
         if (IsEmpty)
         {
-            buffer[start] = item; //`Enqueue` adds the element to the start index of the queue if the queue is empty.
+            buffer[start] = item;
             end++;
         }
         else
         {
-            if (Count == Capacity) //`Enqueue` checks if the queue is full and calls the `Grow` method if necessary.
+            if (Count == Capacity - 1) //capacity - 1 because we need to leave one spot empty to differentiate between full and empty
             {
                 Grow();
             }
 
-            buffer[end] = item; //`Enqueue` adds the element to the end index of the queue.
-            end = (end + 1) % buffer.Length; //`Enqueue` updates the end index of the queue.
+            buffer[end] = item;
+            end = (end + 1) % Capacity;
         }
 
     }
-    public T Dequeue() //`Dequeue` is a method that removes and returns the first element in the queue.
+    public T Dequeue()
     {
         if (IsEmpty)
         {
-            throw new InvalidOperationException("Cannot remove when queue is empty"); //`Dequeue` throws an exception if the queue is empty.
+            throw new InvalidOperationException("Cannot remove when queue is empty");
         }
 
-        T item = buffer[start]!; //`Dequeue` removes and returns the first element in the queue.
-        buffer[start] = default; //`Dequeue` sets the first element to the default value.
-        start = (start + 1) % buffer.Length; //`Dequeue` increments the start index of the queue.
-        return item; //`Dequeue` returns the removed element.
+        T item = buffer[start]!;
+        buffer[start] = default;
+        start = (start + 1) % Capacity;
+        return item;
     }
-    public T Peek() //`Peek` is a method that returns the first element in the queue without removing it.
+    public T Peek()
     {
         if (IsEmpty)
         {
-            throw new InvalidOperationException("Cannot peek when queue is empty"); //`Peek` throws an exception if the queue is empty.
+            throw new InvalidOperationException("Cannot peek when queue is empty");
         }
-        return buffer[start]!; //`Peek` returns the first element in the queue.
+        return buffer[start]!;
 
     }
-    IEnumerator IEnumerable.GetEnumerator() //`IEnumerable.GetEnumerator` is a method that returns an enumerator for the queue.
+    IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator(); //`IEnumerable.GetEnumerator` returns the enumerator for the queue.
+        return GetEnumerator();
     }
 
-    public IEnumerator<T> GetEnumerator()  //`GetEnumerator` is a method that returns an enumerator for the queue.
+    public IEnumerator<T> GetEnumerator()
     {
-        for (int i = start; i < start + Count; i++) //`GetEnumerator` is a method that returns an enumerator for the queue.
+        for (int i = start; i < start + Count; i++)
         {
-            yield return buffer[i % buffer.Length]!; //`GetEnumerator` returns the elements in the queue using a loop.
+            yield return buffer[i % Capacity]!;
         }
     }
 

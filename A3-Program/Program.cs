@@ -8,7 +8,7 @@ static class Program
     /// <summary>
     /// The random number generator used for all RNG in the program.
     /// </summary>
-    public static Random RNG = new(32);
+    public static Random RNG = new(67617);
 
 
     private static void Main()
@@ -19,7 +19,7 @@ static class Program
         var renderer = new CastleGameRenderer()
         {
             CaptureConsoleOutput = true,    // Makes your `Console.WriteLine` calls appear in the game window
-            FrameDelayMS = 100,             // Controls how fast the animation plays
+            FrameDelayMS = 10,             // Controls how fast the animation plays
         };
 
         renderer.Run(new CastleDefender(), startPaused: false);
