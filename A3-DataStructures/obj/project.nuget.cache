@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "LeGWYQuwSUA=",
+  "success": true,
+  "projectFilePath": "/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/A3-DataStructures.csproj",
+  "expectedPackageFiles": [
+    "/Users/vrajchauhan/.nuget/packages/microsoft.netcore.app.ref/6.0.31/microsoft.netcore.app.ref.6.0.31.nupkg.sha512",
+    "/Users/vrajchauhan/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.31/microsoft.aspnetcore.app.ref.6.0.31.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,22 @@
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/bin/Debug/net6.0/A3-DataStructures.deps.json
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/bin/Debug/net6.0/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/bin/Debug/net6.0/A3-DataStructures.pdb
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.GeneratedMSBuildEditorConfig.editorconfig
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.AssemblyInfoInputs.cache
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.AssemblyInfo.cs
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.csproj.CoreCompileInputs.cache
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/refint/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.pdb
+/Users/vrajchauhan/Documents/cois2020/Assignment3 (Updated)/A3-DataStructures/obj/Debug/net6.0/ref/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/bin/Debug/net6.0/A3-DataStructures.deps.json
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/bin/Debug/net6.0/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/bin/Debug/net6.0/A3-DataStructures.pdb
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.GeneratedMSBuildEditorConfig.editorconfig
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.AssemblyInfoInputs.cache
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.AssemblyInfo.cs
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.csproj.CoreCompileInputs.cache
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/refint/A3-DataStructures.dll
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/A3-DataStructures.pdb
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-DataStructures/obj/Debug/net6.0/ref/A3-DataStructures.dll
