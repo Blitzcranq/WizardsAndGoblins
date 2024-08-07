@@ -60,3 +60,6 @@
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/A3-Program.genruntimeconfig.cache
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/ref/A3-Program.dll
 /Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/obj/Debug/net8.0/A3-Program.sourcelink.json
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/bin/Debug/net8.0/A3-DataStructures.deps.json
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/bin/Debug/net8.0/A3-DataStructures.runtimeconfig.json
+/Users/vrajchauhan/Documents/cois2020/Assignment3/A3-Program/bin/Debug/net8.0/A3-DataStructures

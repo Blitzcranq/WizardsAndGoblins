@@ -19,7 +19,7 @@ static class Program
         var renderer = new CastleGameRenderer()
         {
             CaptureConsoleOutput = true,    // Makes your `Console.WriteLine` calls appear in the game window
-            FrameDelayMS = 10,             // Controls how fast the animation plays
+            FrameDelayMS = 100,             // Controls how fast the animation plays
         };
 
         renderer.Run(new CastleDefender(), startPaused: false);

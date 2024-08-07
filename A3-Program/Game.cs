@@ -52,9 +52,9 @@ public class CastleDefender : Visualization
     {
         updateTimer();
         updateSpells();
-        moveGoblins();
+        updateGoblins();
         updateWizards();
-        recoverWizards();
+
         checkForBackup();
 
     }
@@ -62,17 +62,18 @@ public class CastleDefender : Visualization
     {
         nextSpellTime = (nextSpellTime == 0) ? randomSpellTime() : nextSpellTime - 1;
     }
+    // Update the spells
     protected void updateSpells()
     {
-        Node<Spell>? currentSpell = Spells.Head!;
-        while (currentSpell != null)
+        Node<Spell>? currentSpell = Spells.Head!; // Get the head of the list
+        while (currentSpell != null) // Loop through all the spells
         {
-            currentSpell.Item.Move(0, -Spell.Speed);
+            currentSpell.Item.Move(0, -Spell.Speed); // Move the spell up (negative y direction)
             if (CastleGameRenderer.IsOffScreen(currentSpell.Item.Position)) //if the spell is off the screen, remove it
             {
                 Spells!.Remove(currentSpell.Item);
             };
-            currentSpell = currentSpell.Next;
+            currentSpell = currentSpell.Next; // Move to the next spell
         }
 
     }
@@ -83,10 +84,13 @@ public class CastleDefender : Visualization
         CastleGameRenderer.CheckWallCollision(headGoblin.Item, ref localGoblinDirection);
         goblinDirection = localGoblinDirection;
     }
-    protected void moveGoblins()
+
+    // Update the goblins
+    protected void updateGoblins()
     {
-        Node<Goblin>? headGoblin = GoblinSquad.Head;
-        if (headGoblin == null)
+        Node<Goblin>? headGoblin = GoblinSquad.Head; // Get the head of the list
+        //Checking for game over condition
+        if (headGoblin == null) // If the head is null, the game is over and the wizard wins
         {
             Pause();
             Console.WriteLine("Wizard wins!");
@@ -119,7 +123,7 @@ public class CastleDefender : Visualization
         {
             if (currentSpell.Item.Colliding(goblinNode.Item))
             {
-                // Console.WriteLine($"Goblin hit at position {goblinNode.Item.Position}, removing goblin and spell.");
+
                 GoblinSquad.Remove(goblinNode.Item);
                 Spells.Remove(currentSpell.Item);
                 goblinDirection = randomGoblinDirection();
@@ -129,42 +133,44 @@ public class CastleDefender : Visualization
         }
     }
 
+    // Update the wizards
     protected void updateWizards()
     {
-        if (nextSpellTime == 0)
+        if (nextSpellTime == 0) //if the wizard can cast a spell
         {
-            if (ActiveWizard != null && !WizardSquad.IsEmpty)
+            if (ActiveWizard != null && !WizardSquad.IsEmpty) //check first if the wizard is not null and the squad is not empty
             {
-                Spell wizardSpell = new Spell(ActiveWizard.Item.SpellType, ActiveWizard.Item.Position);
-                Spells.AddBack(wizardSpell);
-                if (ActiveWizard.Item.Energy < ActiveWizard.Item.SpellLevel)
+                Spell wizardSpell = new Spell(ActiveWizard.Item.SpellType, ActiveWizard.Item.Position); //create a new spell
+                Spells.AddBack(wizardSpell); //add the spell to the list 
+                if (ActiveWizard.Item.Energy < ActiveWizard.Item.SpellLevel) //if the wizard does not have enough energy to cast the spell
                 {
-                    ActiveWizard.Item.Energy = 0;
+                    ActiveWizard.Item.Energy = 0; //set the energy to 0
                 }
                 else
                 {
-                    ActiveWizard.Item.Energy -= ActiveWizard.Item.SpellLevel;
+                    ActiveWizard.Item.Energy -= ActiveWizard.Item.SpellLevel; //otherwise, subtract the energy from the wizard
                 }
 
-                if (ActiveWizard.Item.Energy == 0)
+                if (ActiveWizard.Item.Energy == 0) //if the wizard has no energy left
                 {
-                    WizardSquad.Remove(ActiveWizard);
-                    RecoveryQueue.Enqueue(ActiveWizard.Item);
+                    WizardSquad.Remove(ActiveWizard); //remove the wizard from the squad
+                    RecoveryQueue.Enqueue(ActiveWizard.Item);   //add the wizard to the recovery queue
                 }
 
 
-                if (ActiveWizard.Next != null)
+                if (ActiveWizard.Next != null) //if the next wizard is not null
                 {
-                    ActiveWizard = ActiveWizard.Next;
+                    ActiveWizard = ActiveWizard.Next; //set the active wizard to the next wizard
                 }
                 else
                 {
-                    ActiveWizard = WizardSquad.Head;
+                    ActiveWizard = WizardSquad.Head; //otherwise, set the active wizard to the head of the squad
                 }
-                nextSpellTime = randomSpellTime();
+                nextSpellTime = randomSpellTime(); //reset the next spell time
 
             }
         }
+        recoverWizards();
     }
     protected void recoverWizards()
     {
